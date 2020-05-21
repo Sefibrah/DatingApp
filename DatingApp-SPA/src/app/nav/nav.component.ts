@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { AlertifyjsService } from './../services/alertifyjs.service';
 import { AuthService } from './../services/auth.service';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -11,34 +10,29 @@ import { Subscription } from 'rxjs';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit, OnDestroy {
+export class NavComponent implements OnInit {
   @ViewChild('loginForm') loginForm: NgForm
-  user:any = null
-  loggedUserSubscription: Subscription
 
-  constructor(private authService: AuthService, private http: HttpClient) { }
+  constructor(public authService: AuthService, private alertify: AlertifyjsService) { }
 
   ngOnInit() {
-    this.loggedUserSubscription = this.authService.loggedUser.subscribe(user => {
-      this.user = user
-      console.log(this.user)
-    })
   }
 
   login(input: any) {
     this.authService.login(input).subscribe(
       next => {
-        console.log("Logged in successfully")
+        this.alertify.success("Logged in successfully!")
       },
       error => {
-        console.log("Oops! Something's not right...")
+        this.alertify.error(error)
       }
     )
   }
-  logout() {
-    this.user = null
+  loggedIn(){
+    return this.authService.loggedIn()
   }
-  ngOnDestroy(){
-    this.loggedUserSubscription.unsubscribe()
+  logout() {
+    localStorage.removeItem('token')
+    this.alertify.message("Logged out!")
   }
 }
