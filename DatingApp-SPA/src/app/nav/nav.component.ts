@@ -2,7 +2,7 @@ import { AlertifyjsService } from './../services/alertifyjs.service';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 export class NavComponent implements OnInit {
   @ViewChild('loginForm') loginForm: NgForm
 
-  constructor(public authService: AuthService, private alertify: AlertifyjsService) { }
+  constructor(public authService: AuthService, private alertify: AlertifyjsService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -25,14 +25,17 @@ export class NavComponent implements OnInit {
       },
       error => {
         this.alertify.error(error)
+      }, () => {
+        this.router.navigate(['/members'])
       }
     )
   }
-  loggedIn(){
+  loggedIn() {
     return this.authService.loggedIn()
   }
   logout() {
     localStorage.removeItem('token')
+    this.router.navigate([''])
     this.alertify.message("Logged out!")
   }
 }

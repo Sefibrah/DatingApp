@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt'
 
 @Injectable({
@@ -30,7 +29,7 @@ export class AuthService {
   register(input: any) {
     return this.http.post(this.baseUrl + 'register', input)
   }
-  loggedIn(){
+  loggedIn() {
     const token = localStorage.getItem('token')
     return !this.jwtHelper.isTokenExpired(token)
   }

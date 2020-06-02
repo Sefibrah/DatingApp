@@ -1,10 +1,23 @@
-.navbar-dark .navbar-nav .nav-link{
-    color: #ffffff;
-    cursor: pointer;
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
 }
-.navbar-dark .navbar-nav .nav-link:hover{
-    color: #e6e6e6;
+
+/* .navbar-dark .navbar-nav .nav-link:after {
+  display: block;
+  content:'';
+  border-bottom: solid 3px #ff2a7c;
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
 }
-.navbar-dark .navbar-brand{
-    cursor: pointer;
+
+.navbar-dark .navbar-nav .nav-link:hover:after {
+  transform: scaleX(1);
+} */
+
+.navbar-dark .navbar-nav .active>.nav-link {
+  border-bottom: solid 3px #ff2a7c;
+}
+
+.navbar-dark .navbar-brand {
+  cursor: pointer;
 }

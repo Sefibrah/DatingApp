@@ -1,5 +1,5 @@
 import { ErrorInterceptorProvider } from './services/error.interceptor';
-import { AppRoutingModule } from './routing.module';
+import { RoutesModule } from './routes';
 import { AuthService } from './services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,6 +14,9 @@ import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MessagesComponent } from './messages/messages.component';
+import { MemberListComponent } from './member-list/member-list.component';
+import { ListsComponent } from './lists/lists.component';
 
 @NgModule({
    declarations: [
@@ -22,13 +25,16 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
       NavComponent,
       RegisterComponent,
       HomeComponent,
-      PageNotFoundComponent
+      PageNotFoundComponent,
+      MessagesComponent,
+      MemberListComponent,
+      ListsComponent
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
       FormsModule,
-      AppRoutingModule,
+      RoutesModule,
       BrowserAnimationsModule,
       BsDropdownModule.forRoot()
    ],
