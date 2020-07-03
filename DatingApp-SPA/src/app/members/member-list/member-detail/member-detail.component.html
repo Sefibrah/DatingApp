@@ -1,0 +1,47 @@
+<div class="d-flex flex-row m-5">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body d-flex flex-column">
+        <img src="{{user.photoUrl}}" class="card-img-top img-thumbnail">
+        <h5>Location:</h5>
+        <p>{{user.city}}, {{user.country}}</p>
+        <h5>Age:</h5>
+        <p>{{user.age}}</p>
+        <h5>Last seen:</h5>
+        <p>{{user.lastSeen}}</p>
+        <h5>Member since:</h5>
+        <p>{{user.created}}</p>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-primary">
+            <input type="radio" name="options" id="option1"><i class="fas fa-grin-hearts"></i> Like
+          </label>
+          <label class="btn btn-success">
+            <input type="radio" name="options" id="option2"><i class="fas fa-envelope"></i> Message
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <tabset>
+      <tab heading="About {{user.knownAs}}">
+        <h4 class="mt-3">Description</h4>
+        <p>{{user.introduction}}</p>
+        <hr>
+        <h4>Looking for</h4>
+        <p>{{user.lookingFor}}</p>
+      </tab>
+      <tab heading="Interests">
+        <h4 class="mt-3">Interests</h4>
+        <p>{{user.interests}}</p>
+      </tab>
+      <tab heading="Photos">
+        <h4 class="mt-3">Photos</h4>
+        <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+      </tab>
+      <tab heading="Messages">
+        <p>Messages will go here</p>
+      </tab>
+    </tabset>
+  </div>
+</div>

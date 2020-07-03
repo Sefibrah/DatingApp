@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-  <a class="navbar-brand" [routerLink]="['']">Dating app</a>
+  <a class="navbar-brand" [routerLink]="['/home']">Dating app</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,7 @@
               Welcome {{ authService.decodedToken?.unique_name | titlecase}}
             </a>
             <div class="dropdown-menu" *dropdownMenu>
-              <a class="dropdown-item"><i class="fas fa-cog"></i> Settings</a>
+              <a class="dropdown-item" [routerLink]="['/member/edit']" ><i class="fas fa-cog"></i> Edit profile</a>
               <a class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
           </li>
