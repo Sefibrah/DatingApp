@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt'
 import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = environment.apiUrl+'auth/'
+  baseUrl = environment.apiUrl + 'auth/'
   jwtHelper = new JwtHelperService()
-  decodedToken: any
+  loggedInUser = new Subject<User>()
+  decodedToken: any = null
 
   constructor(private http: HttpClient) { }
   login(input: any) {
@@ -24,8 +27,8 @@ export class AuthService {
       })
     );
   }
-  register(input: any) {
-    return this.http.post(this.baseUrl + 'register', input)
+  register(user: User) {
+    return this.http.post(this.baseUrl + 'register', user)
   }
   loggedIn() {
     const token = localStorage.getItem('token')

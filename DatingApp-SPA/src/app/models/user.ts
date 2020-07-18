@@ -1,17 +1,18 @@
 import { Photo } from './photo';
-export interface User{
-    id: number
-    username: string
-    gender: string
-    age: number
-    knownAs: string
-    city: string
-    country: string
-    created: Date
-    lastSeen: Date
-    photoUrl: string
-    introduction?: string
-    lookingFor?: string
-    interests?: string
-    photos?: Photo[]
+export class User {
+    constructor(
+        public id: number,
+        public username: string,
+        public gender: string,
+        public age: number,
+        public knownAs: string,
+        public city: string,
+        public country: string,
+        public created: Date,
+        public lastSeen: Date,
+        public photoUrl: string,
+        public introduction?: string,
+        public lookingFor?: string,
+        public interests?: string,
+        public photos?: Photo[]) { }
 }

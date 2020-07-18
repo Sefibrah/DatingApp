@@ -13,11 +13,12 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
 import { TabsModule } from 'ngx-bootstrap/tabs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgxGalleryModule } from 'ngx-gallery-9';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
 import { NavComponent } from './nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -25,6 +26,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { ListsComponent } from './lists/lists.component';
 
 import { JwtModule } from '@auth0/angular-jwt';
+import { FileUploadModule } from 'ng2-file-upload';
 
 export function tokenGetter() {
    return localStorage.getItem("token");
@@ -49,18 +51,21 @@ export function tokenGetter() {
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      ReactiveFormsModule,
       RoutesModule,
       BrowserAnimationsModule,
       NgxGalleryModule,
+      FileUploadModule,
+      BsDatepickerModule.forRoot(),
       TabsModule.forRoot(),
       BsDropdownModule.forRoot(),
       JwtModule.forRoot({
-        config: {
-          tokenGetter: tokenGetter,
-          whitelistedDomains: ["localhost:5000"],
-          blacklistedRoutes: ["localhost:5000/api/auth"],
-        },
-      }),
+         config: {
+            tokenGetter: tokenGetter,
+            whitelistedDomains: ["localhost:5000"],
+            blacklistedRoutes: ["localhost:5000/api/auth"],
+         },
+      })
    ],
    providers: [
       AuthService,

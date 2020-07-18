@@ -18,6 +18,9 @@ namespace DatingApp.API.Helpers {
                     u.DateOfBirth.GetAge (u.DateOfBirth)));
             CreateMap<Photo, PhotoForDetailedDto> ();
             CreateMap<UserForUpdateDto, User> ();
+            CreateMap<Photo, PhotoForReturnDto> ();
+            CreateMap<PhotoForUploadDto, Photo> ();
+            CreateMap<UserForRegisterDto, User> ();
         }
     }
 }

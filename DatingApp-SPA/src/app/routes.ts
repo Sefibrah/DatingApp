@@ -14,29 +14,12 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-    { path: 'home', component: HomeComponent, pathMatch: 'full' },
-    {
-        path: '',
-        runGuardsAndResolvers: 'always',
-        canActivate: [AuthGuard],
-        children: [
-            { path: 'lists', component: ListsComponent },
-            { path: 'messages', component: MessagesComponent },
-            {
-                path: 'member-list', component: MemberListComponent,
-                resolve: { users: MemberListResolver }
-            },
-            {
-                path: 'members/:id', component: MemberDetailComponent,
-                resolve: { user: MemberDetailResolver }
-            },
-            {
-                path: 'member/edit', component: MemberEditComponent,
-                resolve: { user: MemberEditResolver },
-                canDeactivate: [PreventUnsavedChangesGuard]
-            }
-        ]
-    },
+    { path: '', component: HomeComponent },
+    { path: 'lists', component: ListsComponent, canActivate: [AuthGuard], },
+    { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard], },
+    { path: 'member-list', component: MemberListComponent, canActivate: [AuthGuard], resolve: { users: MemberListResolver } },
+    { path: 'members/:id', component: MemberDetailComponent, canActivate: [AuthGuard], resolve: { user: MemberDetailResolver } },
+    { path: 'member/edit', component: MemberEditComponent, canActivate: [AuthGuard], resolve: { user: MemberEditResolver }, canDeactivate: [PreventUnsavedChangesGuard] },
     { path: 'register', component: RegisterComponent },
     { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ]

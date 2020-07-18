@@ -2,7 +2,9 @@
   <div class="col-md-4">
     <div class="card">
       <div class="card-body d-flex flex-column">
-        <img src="{{user.photoUrl}}" class="card-img-top img-thumbnail mb-3">
+        <h5>Edit {{user.username | titlecase}}</h5>
+        <img src="{{mainPhotoThumbnail || '../../../../../../assets/user.png'}}"
+          class="card-img-top img-thumbnail mb-3">
         <h5>Location:</h5>
         <p>{{user.city}}, {{user.country}}</p>
         <h5>Age:</h5>
@@ -12,35 +14,99 @@
         <h5>Member since:</h5>
         <p>{{user.created}}</p>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <button [disabled]="!editForm.dirty" class="btn btn-success" form="editForm"><i class="fas fa-cloud-upload-alt"></i> Save changes</button>
+          <button [disabled]="!editForm.dirty" class="btn btn-success" form="editForm"><i
+              class="fas fa-cloud-upload-alt"></i> Save changes</button>
         </div>
       </div>
     </div>
   </div>
   <div class="col-md-8">
     <p class="alert alert-info" *ngIf="editForm.dirty">You have made some changes. Any unsaved data will be lost.</p>
-    <tabset>
-      <form (ngSubmit)="updateUser()" #editForm="ngForm" id="editForm">
+    <form (ngSubmit)="updateUser()" #editForm="ngForm" id="editForm">
+      <tabset>
         <tab heading="Edit profile">
           <h4 class="mt-3">Introduction</h4>
-          <textarea name="introduction" rows="5" class="form-control" [(ngModel)]="user.introduction">{{user.introduction}}</textarea>
+          <textarea name="introduction" rows="5" class="form-control"
+            [(ngModel)]="user.introduction">{{user.introduction}}</textarea>
           <hr>
           <h4>Looking for</h4>
-          <textarea name="lookingFor" rows="4" class="form-control" [(ngModel)]="user.lookingFor">{{user.lookingFor}}</textarea>
+          <textarea name="lookingFor" rows="4" class="form-control"
+            [(ngModel)]="user.lookingFor">{{user.lookingFor}}</textarea>
           <hr>
           <h4>Interests</h4>
-          <textarea name="interests" rows="3" class="form-control" [(ngModel)]="user.interests">{{user.interests}}</textarea>
+          <textarea name="interests" rows="3" class="form-control"
+            [(ngModel)]="user.interests">{{user.interests}}</textarea>
           <hr>
           <p>Country: </p>
           <input type="text" class="form-control mb-3 col-md-4" [(ngModel)]="user.country" name="country">
           <p>City: </p>
           <input type="text" class="form-control mb-3 col-md-4" [(ngModel)]="user.city" name="city">
         </tab>
-      </form>
-      <tab heading="Edit photos">
-        <h4 class="mt-3">Photos</h4>
-        <p>Here shall be the photo editing part.</p>
-      </tab>
-    </tabset>
+        <tab heading="Edit photos">
+          <h4 class="mt-3">Photos</h4>
+          <div class="d-flex flex-row">
+            <div class="d-flex flex-column mb-3 mr-3" *ngFor="let photo of photos">
+              <img [src]="photo.url" class="img-fluid img-thumbnail photo-edit">
+              <div class="d-flex flex-row mt-2 justify-content-center">
+                <button class="btn mr-2" [ngClass]="photo.isMain ? 'btn-success' : 'btn-secondary'"
+                  [disabled]="photo.isMain" (click)="setMainPhoto(photo)">Main</button>
+                <button class="btn btn-danger" (click)="deletePhoto(photo)"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="row my-3">
+            <div class="col-md-3">
+              <h3 class="my-3">Select files</h3>
+              <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                [uploader]="uploader"
+                class="card my-drop-zone d-flex flex-column justify-content-center align-items-center my-3">
+                <i class="fas fa-upload fa-5x"></i>
+                <span>Drop zone</span>
+              </div>
+              <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br class="mt-3" />
+              <input type="file" ng2FileSelect [uploader]="uploader" class="mt-3" />
+            </div>
+            <div class="col-md-9" *ngIf="uploader?.queue?.length">
+              <h3 class="my-3">Upload queue</h3>
+              <p>Queue length: {{ uploader?.queue?.length }}</p>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th width="50%">Name</th>
+                    <th>Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of uploader.queue">
+                    <td><strong>{{ item?.file?.name }}</strong></td>
+                    <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div>
+                <div>
+                  <span>Queue progress:</span>
+                  <div class="progress my-3">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()"
+                  [disabled]="!uploader.getNotUploadedItems().length">
+                  <span class="fa fa-file-upload"></span> Upload all
+                </button>
+                <button type="button" class="btn btn-warning btn-s" (click)="uploader.cancelAll()"
+                  [disabled]="!uploader.isUploading">
+                  <span class="fa fa-ban"></span> Cancel all
+                </button>
+                <button type="button" class="btn btn-danger btn-s" (click)="uploader.clearQueue()"
+                  [disabled]="!uploader.queue.length">
+                  <span class="fa fa-trash"></span> Remove all
+                </button>
+              </div>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </form>
   </div>
 </div>

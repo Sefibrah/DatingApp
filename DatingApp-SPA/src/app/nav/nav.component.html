@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-  <a class="navbar-brand" [routerLink]="['/home']">Dating app</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top mb-3">
+  <a class="navbar-brand" [routerLink]="['']">Dating app</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,26 +7,27 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['/member-list']" >Matches</a>
+        <a class="nav-link" [routerLink]="['/member-list']">Matches</a>
       </li>
-      <li class="nav-item" routerLinkActive="active" >
-        <a class="nav-link" [routerLink]="['/lists']" >Lists</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/lists']">Lists</a>
       </li>
-      <li class="nav-item" routerLinkActive="active" >
-        <a class="nav-link" [routerLink]="['/messages']" >Messages</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/messages']">Messages</a>
       </li>
     </ul>
     <div class="ml-auto">
       <ul class="navbar-nav">
-          <li class="nav-item dropdown" *ngIf="loggedIn()" dropdown>
-            <a class="nav-link dropdown-toggle" role="button" dropdownToggle>
-              Welcome {{ authService.decodedToken?.unique_name | titlecase}}
-            </a>
-            <div class="dropdown-menu" *dropdownMenu>
-              <a class="dropdown-item" [routerLink]="['/member/edit']" ><i class="fas fa-cog"></i> Edit profile</a>
-              <a class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </div>
-          </li>
+        <li class="nav-item dropdown" *ngIf="loggedIn()" dropdown>
+          <a class="nav-link dropdown-toggle" role="button" dropdownToggle>
+            <img src="{{mainPhoto || '../../../../assets/user.png'}}" class="img-fluid nav-main-photo">
+            Welcome {{ authService.decodedToken?.unique_name | titlecase}}
+          </a>
+          <div class="dropdown-menu" *dropdownMenu>
+            <a class="dropdown-item" [routerLink]="['/member/edit']"><i class="fas fa-cog"></i> Edit profile</a>
+            <a class="dropdown-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </li>
       </ul>
       <form class="form-inline" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" *ngIf="!loggedIn()">
         <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username" aria-label="Username"

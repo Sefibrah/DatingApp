@@ -1,17 +1,89 @@
-<div class="container">
-  <form #registerForm="ngForm" class="mx-auto col-md-5">
+<div class="container mb-5">
+  <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)" class="mx-auto col-md-5">
     <h2 class="text-center my-3">Register now</h2>
     <hr>
     <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" name="username" id="username" ngModel required>
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" id="username" formControlName="username">
+      <p class="text-danger" *ngIf="registerForm.get('username').invalid && registerForm.get('username').touched">
+        Username must be filled out.</p>
     </div>
     <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" id="password" ngModel required>
+      <label for="knownAs">Known as:</label>
+      <input type="text" class="form-control" id="knownAs" formControlName="knownAs">
+      <p class="text-danger" *ngIf="registerForm.get('knownAs').invalid && registerForm.get('knownAs').touched">Known as
+        must be filled out.</p>
     </div>
-    <div class="d-flex flex-row col-md-8 mx-auto">
-      <button class="btn-success btn col-md-6 mr-1" (click)="register(registerForm.value)">Register</button>
+    <div class="form-group">
+      <label for="city">City:</label>
+      <input type="text" class="form-control" id="city" formControlName="city">
+      <p class="text-danger" *ngIf="registerForm.get('city').invalid && registerForm.get('city').touched">City must be
+        filled out.</p>
+    </div>
+    <div class="form-group">
+      <label for="country">Country:</label>
+      <input type="text" class="form-control" id="country" formControlName="country">
+      <p class="text-danger" *ngIf="registerForm.get('country').invalid && registerForm.get('country').touched">Country
+        must be filled out.</p>
+    </div>
+    <div class="form-group">
+      <label for="dateOfBirth">Date of birth:</label>
+      <input type="text" class="form-control" bsDatepicker formControlName="dateOfBirth"
+        [bsConfig]="{ isAnimated: true, containerClass: 'theme-red' }" placement="top" [minDate]="minDate"
+        [maxDate]="maxDate" />
+      <p class="text-danger" *ngIf="registerForm.get('dateOfBirth').invalid && registerForm.get('dateOfBirth').touched">
+        Date of birth must be filled out.</p>
+    </div>
+    <div class="form-group d-flex flex-column">
+      <div class="d-flex flex-row">
+        <label class="mr-3">Gender: </label>
+        <div class="form-check mr-3">
+          <input class="form-check-input" type="radio" name="gender" id="male" value="Male" formControlName="gender">
+          <label class="form-check-label" for="male">
+            Male
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="female" value="Female"
+            formControlName="gender">
+          <label class="form-check-label" for="female">
+            Female
+          </label>
+        </div>
+      </div>
+      <p class="text-danger" *ngIf="registerForm.get('gender').invalid && registerForm.get('gender').touched">Please
+        select your gender</p>
+    </div>
+    <div formGroupName="passwords">
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" formControlName="password">
+        <p class="text-danger"
+          *ngIf="registerForm.get('passwords.password').invalid && registerForm.get('passwords.password').touched">
+          <span *ngIf="registerForm.get('passwords.password').errors['required']">Password must be filled out.</span>
+          <span *ngIf="registerForm.get('passwords.password').errors['minlength']">Password must be at least 8
+            characters
+            long.</span>
+        </p>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm password:</label>
+        <input type="password" class="form-control confirmPassword" id="confirmPassword"
+          formControlName="confirmPassword">
+        <p class="text-danger"
+          *ngIf="registerForm.get('passwords.confirmPassword').invalid && registerForm.get('passwords.confirmPassword').touched">
+          <span *ngIf="registerForm.get('passwords.confirmPassword').errors['required']">Confirm password need to
+            be filled out.</span>
+        </p>
+        <p class="text-danger" *ngIf="registerForm.get('passwords').errors
+        && registerForm.get('passwords.confirmPassword').touched
+        && registerForm.get('passwords.confirmPassword').errors == null">
+          Passwords don't match.
+        </p>
+      </div>
+    </div>
+    <div class="d-flex flex-row mx-auto">
+      <button type="submit" class="btn-success btn col-md-6 mr-1" [disabled]="registerForm.invalid">Register</button>
       <button class="btn-info btn col-md-6 ml-1" [routerLink]="['']">Cancel</button>
     </div>
   </form>

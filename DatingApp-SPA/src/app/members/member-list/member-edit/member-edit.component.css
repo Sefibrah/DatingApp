@@ -1,0 +1,18 @@
+.photo-edit {
+  width: 150px;
+  height: 150px;
+}
+
+input[type="file"] {
+  color: transparent;
+}
+
+.my-drop-zone {
+  border: 5px dotted #e3e3e3;
+  padding: 30px 0;
+}
+
+.nv-file-over {
+  border: 5px dotted #ff4b4b;
+  padding: 30px 0;
+}

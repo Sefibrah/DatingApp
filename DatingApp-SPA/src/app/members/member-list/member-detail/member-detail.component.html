@@ -2,7 +2,8 @@
   <div class="col-md-4">
     <div class="card">
       <div class="card-body d-flex flex-column">
-        <img src="{{user.photoUrl}}" class="card-img-top img-thumbnail">
+        <h5>About {{user.username | titlecase}}</h5>
+        <img src="{{user.photoUrl || '../../../../../../assets/user.png'}}" class="card-img-top img-thumbnail">
         <h5>Location:</h5>
         <p>{{user.city}}, {{user.country}}</p>
         <h5>Age:</h5>
