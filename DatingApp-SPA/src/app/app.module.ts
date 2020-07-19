@@ -14,6 +14,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimeagoModule } from 'ngx-timeago';
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
@@ -45,7 +46,7 @@ export function tokenGetter() {
       MemberListComponent,
       ListsComponent,
       MemberEditComponent,
-      MemberDetailComponent
+      MemberDetailComponent,
    ],
    imports: [
       BrowserModule,
@@ -56,6 +57,7 @@ export function tokenGetter() {
       BrowserAnimationsModule,
       NgxGalleryModule,
       FileUploadModule,
+      TimeagoModule.forRoot(),
       BsDatepickerModule.forRoot(),
       TabsModule.forRoot(),
       BsDropdownModule.forRoot(),

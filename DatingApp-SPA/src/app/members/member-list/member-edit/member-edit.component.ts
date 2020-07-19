@@ -98,7 +98,7 @@ export class MemberEditComponent implements OnInit, OnDestroy {
 
   deletePhoto(photo: Photo) {
     this.userService.deletePhoto(this.authService.decodedToken.nameid, photo.id).subscribe(
-      () => this.photos.slice(this.photos.indexOf(photo), 1),
+      () => this.photos.splice(this.photos.indexOf(photo), 1),
       error => console.log(error)
     )
   }

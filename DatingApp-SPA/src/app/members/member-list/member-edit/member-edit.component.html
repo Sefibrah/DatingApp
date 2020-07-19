@@ -10,9 +10,9 @@
         <h5>Age:</h5>
         <p>{{user.age}}</p>
         <h5>Last seen:</h5>
-        <p>{{user.lastSeen}}</p>
+        <p>{{user.lastSeen | timeago}}</p>
         <h5>Member since:</h5>
-        <p>{{user.created}}</p>
+        <p>{{user.created | date:'mediumDate'}}</p>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <button [disabled]="!editForm.dirty" class="btn btn-success" form="editForm"><i
               class="fas fa-cloud-upload-alt"></i> Save changes</button>

@@ -9,15 +9,15 @@
         <h5>Age:</h5>
         <p>{{user.age}}</p>
         <h5>Last seen:</h5>
-        <p>{{user.lastSeen}}</p>
+        <p>{{user.lastSeen | timeago}}</p>
         <h5>Member since:</h5>
-        <p>{{user.created}}</p>
+        <p>{{user.created | date:'mediumDate'}}</p>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-primary">
             <input type="radio" name="options" id="option1"><i class="fas fa-grin-hearts"></i> Like
           </label>
           <label class="btn btn-success">
-            <input type="radio" name="options" id="option2"><i class="fas fa-envelope"></i> Message
+            <input type="radio" name="options" id="option2"><i class="fas fa-paper-plane"></i> Message
           </label>
         </div>
       </div>
