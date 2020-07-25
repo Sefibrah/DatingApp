@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -14,8 +15,9 @@ export class AuthService {
   jwtHelper = new JwtHelperService()
   loggedInUser = new Subject<User>()
   decodedToken: any = null
+  user: User
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
   login(input: any) {
     return this.http.post(this.baseUrl + 'login', input).pipe(
       map((response: any) => {

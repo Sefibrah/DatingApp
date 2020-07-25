@@ -1,7 +1,41 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-3 col-sm-6" *ngFor="let user of users">
-      <app-member [user]="user"></app-member>
+<div class="container d-flex flex-column">
+  <div class="d-flex flex-row align-items-end">
+    <div class="col-md-2">
+      <label for="ageFrom">Age from: </label>
+      <input type="number" id="ageFrom" class="form-control" [(ngModel)]="userParams.minAge">
+    </div>
+    <div class="col-md-2">
+      <label for="ageTo">Age to: </label>
+      <input type="number" id="ageTo" class="form-control" [(ngModel)]="userParams.maxAge">
+    </div>
+    <div class="col-md-2">
+      <label for="gender">Gender: </label>
+      <select id="gender" class="dropdown form-control" [(ngModel)]="userParams.gender">
+        <option *ngFor="let gender of genders" [ngValue]="gender.value" [selected]="userParams.gender == gender.value">
+          {{gender.name}}</option>
+      </select>
+    </div>
+    <button class="btn btn-success mr-3" (click)="loadUsers()">Apply filters</button>
+    <button class="btn btn-danger" (click)="resetFilters()">Reset filters</button>
+    <div class="ml-auto">
+      <label class="mr-3">Sort users: </label>
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-warning">
+          <input type="radio" name="options" (click)="loadUsers('created')"> Created
+        </label>
+        <label class="btn btn-warning">
+          <input type="radio" name="options" (click)="loadUsers()"> Last seen
+        </label>
+      </div>
     </div>
   </div>
+  <div class="d-flex flex-row justify-content-center">
+    <div class="col-md-3 col-sm-5 mx-1" *ngFor="let singularUser of users">
+      <app-member [user]="singularUser"></app-member>
+    </div>
+  </div>
+  <pagination class="mx-auto" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+    [itemsPerPage]="pagination.pageSize" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  </pagination>
 </div>

@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimeagoModule } from 'ngx-timeago';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
@@ -57,6 +58,7 @@ export function tokenGetter() {
       BrowserAnimationsModule,
       NgxGalleryModule,
       FileUploadModule,
+      PaginationModule.forRoot(),
       TimeagoModule.forRoot(),
       BsDatepickerModule.forRoot(),
       TabsModule.forRoot(),

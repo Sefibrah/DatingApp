@@ -25,10 +25,12 @@
   margin-right: auto;
   opacity: 0;
 }
+
 .card-img-wrapper:hover .member-icons {
-    opacity: 1;
-    bottom: 0;
+  opacity: 1;
+  bottom: 0;
 }
-.animate{
-    transition:.2s ease-out all;
+
+.animate {
+  transition: .2s ease-out all;
 }
