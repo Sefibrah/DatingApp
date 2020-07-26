@@ -1,3 +1,22 @@
-<p>
-  lists works!
-</p>
+<div class="container d-flex flex-column">
+  <div class="mx-auto">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-warning">
+        <input type="radio" name="options" (click)="loadUsers('Likers')"> Users that liked me
+      </label>
+      <label class="btn btn-warning">
+        <input type="radio" name="options" (click)="loadUsers('Likees')"> Users that I've liked
+      </label>
+    </div>
+  </div>
+  <div class="d-flex flex-row justify-content-center">
+    <div class="col-md-3 col-sm-5 mx-1" *ngFor="let singularUser of users">
+      <app-member [user]="singularUser"></app-member>
+    </div>
+  </div>
+  <pagination class="mx-auto" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+    [itemsPerPage]="pagination.pageSize" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  </pagination>
+</div>
+
