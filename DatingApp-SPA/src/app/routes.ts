@@ -1,3 +1,4 @@
+import { MessagesResolver } from './resolvers/messages.resolver';
 import { ListsResolver } from './resolvers/lists.resolver';
 import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
 import { MemberEditResolver } from './resolvers/member-edit.resolver';
@@ -16,8 +17,8 @@ import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'lists', component: ListsComponent, canActivate: [AuthGuard], resolve: {users: ListsResolver}},
-    { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard], },
+    { path: 'lists', component: ListsComponent, canActivate: [AuthGuard], resolve: { users: ListsResolver } },
+    { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard], resolve: { messages: MessagesResolver } },
     { path: 'member-list', component: MemberListComponent, canActivate: [AuthGuard], resolve: { users: MemberListResolver } },
     { path: 'members/:id', component: MemberDetailComponent, canActivate: [AuthGuard], resolve: { user: MemberDetailResolver } },
     { path: 'member/edit', component: MemberEditComponent, canActivate: [AuthGuard], resolve: { user: MemberEditResolver }, canDeactivate: [PreventUnsavedChangesGuard] },

@@ -1,7 +1,6 @@
+import { Message } from './../models/message';
 import { map } from 'rxjs/operators';
 import { PaginatedResult } from './../models/pagination';
-import { AuthService } from './auth.service';
-import { Photo } from './../models/photo';
 import { environment } from './../../environments/environment';
 import { User } from './../models/user';
 import { Observable, Subject } from 'rxjs';
@@ -59,5 +58,24 @@ export class UserService {
 
     sendLike(id: number, recipientId: number) {
         return this.http.post(this.baseUrl + id + '/like/' + recipientId, {})
+    }
+
+    getUserMessages(id?, pageSize?, pageNumber?, messageContainer?) {
+        const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>()
+        var params = new HttpParams()
+        params = params.append("messageContainer", messageContainer)
+        if (pageSize != null && pageNumber != null) {
+            params = params.append("pageSize", pageSize)
+            params = params.append("pageNumber", pageNumber)
+        }
+        return this.http.get<Message[]>(this.baseUrl + id + '/messages', { observe: 'response', params }).pipe(
+            map(response => {
+                console.log(response)
+                paginatedResult.result = response.body
+                if (response.headers.get("Pagination") != null)
+                    paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"))
+                return paginatedResult
+            })
+        )
     }
 }

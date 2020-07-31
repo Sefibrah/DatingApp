@@ -1,3 +1,55 @@
-<p>
-  messages works!
-</p>
+<div class="container">
+  <!-- <div class="btn-group btn-group-toggle">
+    <button class="btn btn-secondary" [(ngModel)]="messageContainer" value="Unread" (click)="loadMessages()"><i
+        class="fas fa-envelope-open-text"></i> Unread</button>
+    <button class="btn btn-secondary" [(ngModel)]="messageContainer" value="Inbox" (click)="loadMessages()">
+      <i class="fas fa-inbox"></i> Inbox</button>
+    <button class="btn btn-secondary" [(ngModel)]="messageContainer" value="Outbox" (click)="loadMessages()">
+      <i class="fas fa-paper-plane"></i> Outbox</button>
+  </div> -->
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" (click)="loadMessages('Unread')">
+      <i class="fas fa-envelope-open-text"></i> Unread
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" (click)="loadMessages('Inbox')">
+      <i class="fas fa-inbox"></i> Inbox
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" name="options" (click)="loadMessages('Outbox')">
+      <i class="fas fa-paper-plane"></i> Outbox
+    </label>
+  </div>
+  <hr>
+  <p class="text-center my-3" *ngIf="messages.length == 0">No messages found yet!</p>
+  <table *ngIf="messages.length > 0">
+    <tr>
+      <th>Message</th>
+      <th>From / To</th>
+      <th>Sent / Recieved</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let message of messages"
+      [routerLink]="['/members', messageContainer == 'Outbox' ? message.recipientId : message.senderId]"
+      routerLinkActive="message-row-hover">
+      <td>{{message.content}}</td>
+      <td>
+        <div *ngIf="messageContainer == 'Outbox'" class="d-flex flex-row align-items-center">
+          <img [src]="message.recipientPhotoUrl" class="img-fluid">
+          <span class="ml-2">{{message.recipientKnownAs}}</span>
+        </div>
+        <div *ngIf="messageContainer != 'Outbox'" class="d-flex flex-row align-items-center">
+          <img [src]="message.senderPhotoUrl" class="img-fluid">
+          <span class="ml-2">{{message.senderKnownAs}}</span>
+        </div>
+      </td>
+      <td>
+        <span>{{message.messageSent | timeago}}</span>
+      </td>
+      <td>
+        <button class="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
