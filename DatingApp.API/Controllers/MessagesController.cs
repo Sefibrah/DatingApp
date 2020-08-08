@@ -63,18 +63,56 @@ namespace DatingApp.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMessage(int userId, MessageForCreationDto messageForCreationDto)
         {
-            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            var sender = await _repo.GetUser(userId);
+            if (sender.Id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
             messageForCreationDto.SenderId = userId;
             var recipient = await _repo.GetUser(messageForCreationDto.RecipientId);
             if (recipient == null)
                 return NotFound();
             var message = _mapper.Map<Message>(messageForCreationDto);
+            message.MessageSent = messageForCreationDto.Created;
             _repo.Add(message);
-            var messageForReturn = _mapper.Map<MessageForCreationDto>(message);
+            var messageForReturn = _mapper.Map<MessageForReturnDto>(message);
             if (await _repo.SaveAll())
+            {
+                var mainPhoto = await _repo.GetMainPhotoForUser(sender.Id);
+                messageForReturn.MessageSent = messageForCreationDto.Created;
+                messageForReturn.SenderKnownAs = sender.KnownAs;
+                messageForReturn.SenderPhotoUrl = mainPhoto.URL;
                 return CreatedAtAction("GetMessage", new { userId, id = message.Id }, messageForReturn);
+            }
             throw new Exception("Couldn't send this message");
+        }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> DeleteMessage(int id, int userId)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            var messageFromRepo = await _repo.GetMessage(id);
+            if (messageFromRepo.SenderId == userId)
+                messageFromRepo.SenderDeleted = true;
+            if (messageFromRepo.RecipientId == userId)
+                messageFromRepo.RecepientDeleted = true;
+            if (messageFromRepo.RecepientDeleted && messageFromRepo.SenderDeleted)
+                _repo.Delete(messageFromRepo);
+            if (await _repo.SaveAll())
+                return NoContent();
+            throw new Exception("Couldn't delete this message.");
+        }
+        [HttpPost("{id}/read")]
+        public async Task<IActionResult> MarkAsRead(int id, int userId){
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+            var messageFromRepo = await _repo.GetMessage(id);
+            if(messageFromRepo == null)
+                return NotFound();
+            messageFromRepo.IsRead = true;
+            messageFromRepo.DateRead = DateTime.Now;
+            if(await _repo.SaveAll())
+                return NoContent();
+            throw new Exception("An error occured when trying to mark a message as read");
         }
     }
 }

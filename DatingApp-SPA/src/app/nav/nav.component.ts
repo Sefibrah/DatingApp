@@ -50,7 +50,6 @@ export class NavComponent implements OnInit {
         this.router.navigate(['/member-list'])
       },
       error => {
-        console.log(error)
         this.alertify.error(error)
       }, () => {
         this.router.navigate(['/member-list'])

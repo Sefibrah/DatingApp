@@ -70,12 +70,27 @@ export class UserService {
         }
         return this.http.get<Message[]>(this.baseUrl + id + '/messages', { observe: 'response', params }).pipe(
             map(response => {
-                console.log(response)
                 paginatedResult.result = response.body
                 if (response.headers.get("Pagination") != null)
                     paginatedResult.pagination = JSON.parse(response.headers.get("Pagination"))
                 return paginatedResult
             })
         )
+    }
+
+    getUserMessagesThread(id: number, recipientId: number){
+        return this.http.get<Message[]>(this.baseUrl + id + "/messages/thread/" + recipientId)
+    }
+
+    sendMessage(id: number, message: Message){
+        return this.http.post(this.baseUrl + id + '/messages', message)
+    }
+
+    deleteMessage(id: number, userId: number){
+        return this.http.post(this.baseUrl + userId + "/messages/" + id, {})
+    }
+
+    markMessageAsRead(id: number, userId: number){
+        return this.http.post(this.baseUrl + userId + '/messages/' + id + '/read', {})
     }
 }

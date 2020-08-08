@@ -19,11 +19,10 @@ export class MessagesComponent implements OnInit {
   constructor(private authService: AuthService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private alertifyjs: AlertifyjsService) { }
+    private alertify: AlertifyjsService) { }
 
   ngOnInit() {
     this.route.data.subscribe((data: PaginatedResult<Message[]>) => {
-      console.log(data)
       this.messages = data['messages'].result
       this.pagination = data['messages'].pagination
     })
@@ -36,12 +35,21 @@ export class MessagesComponent implements OnInit {
         (res: PaginatedResult<Message[]>) => {
           this.messages = res.result
           this.pagination = res.pagination
-        }, error => this.alertifyjs.error(error)
+        }, error => this.alertify.error(error)
       )
   }
 
   pageChanged(event: any): void {
     this.pagination.currentPage = event.page
     this.loadMessages()
+  }
+
+  deleteMessage(message: Message) {
+    this.alertify.confirm("Are you sure that you want to delete this message?", () => {
+      this.userService.deleteMessage(message.id, this.authService.decodedToken.nameid).subscribe(
+        () => this.messages.splice(this.messages.indexOf(message), 1),
+        error => this.alertify.error(error)
+      )
+    })
   }
 }

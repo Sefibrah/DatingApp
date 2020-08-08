@@ -1,8 +1,8 @@
 import { User } from './../../../models/user';
-import { UserService } from './../../../services/user.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery-9';
+import { TabsetComponent } from 'ngx-bootstrap/tabs';
 
 @Component({
   selector: 'app-member-detail',
@@ -13,12 +13,20 @@ export class MemberDetailComponent implements OnInit {
   user: User
   galleryOptions: NgxGalleryOptions[]
   galleryImages: NgxGalleryImage[]
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  tabParam: number
+  @ViewChild('staticTabs', { static: true }) staticTabs: TabsetComponent;
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.user = data['user']
     })
+    this.route.queryParams.subscribe(
+      params => {
+        this.tabParam = params['tab']
+        this.selectTab(this.tabParam)
+      }
+    )
     this.galleryOptions = [
       {
         width: '600px',
@@ -26,7 +34,6 @@ export class MemberDetailComponent implements OnInit {
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide
       },
-      // max-width 800
       {
         breakpoint: 800,
         width: '100%',
@@ -36,7 +43,6 @@ export class MemberDetailComponent implements OnInit {
         thumbnailsMargin: 20,
         thumbnailMargin: 20
       },
-      // max-width 400
       {
         breakpoint: 400,
         preview: false
@@ -56,5 +62,8 @@ export class MemberDetailComponent implements OnInit {
       )
     }
     return gImages
+  }
+  selectTab(id: number) {
+    this.staticTabs.tabs[id].active = true;
   }
 }

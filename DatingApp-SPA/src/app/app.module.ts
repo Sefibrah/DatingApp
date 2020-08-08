@@ -1,3 +1,4 @@
+import { MessagesChatComponent } from './members/member-list/member-detail/messages-chat/messages-chat.component';
 import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
 import { MemberEditComponent } from './members/member-list/member-edit/member-edit.component';
 import { MemberDetailComponent } from './members/member-list/member-detail/member-detail.component';
@@ -18,7 +19,6 @@ import { TimeagoModule } from 'ngx-timeago';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { AppComponent } from './app.component';
-import { ValueComponent } from './value/value.component';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
@@ -37,7 +37,6 @@ export function tokenGetter() {
 @NgModule({
    declarations: [
       AppComponent,
-      ValueComponent,
       NavComponent,
       RegisterComponent,
       HomeComponent,
@@ -48,6 +47,7 @@ export function tokenGetter() {
       ListsComponent,
       MemberEditComponent,
       MemberDetailComponent,
+      MessagesChatComponent
    ],
    imports: [
       BrowserModule,

@@ -1,0 +1,75 @@
+.messages-card {
+  position: relative;
+  border: 1px solid #d2d2d2;
+  padding: 0 !important;
+}
+
+.messages-display {
+  overflow-y: auto;
+  height: 420px;
+}
+
+.messages-input-box {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  width: 100%;
+  bottom: -80px;
+}
+
+form {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.messages-message-recipient-pill {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  margin-right: auto;
+  margin-left: 15px;
+  max-width: 70%;
+}
+
+.messages-message-sender-pill {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 15px;
+  margin-left: auto;
+  width: fit-content;
+  max-width: 70%;
+}
+
+.messages-message-sender-pill .messages-pill-user-icon,
+.messages-message-recipient-pill .messages-pill-user-icon {
+  height: 30px;
+  border-radius: 50%;
+}
+
+.messages-message-recipient-pill .messages-message-pill-content {
+  padding: 7px 20px;
+  background-color: #cecece;
+  border-radius: 25px;
+  height: 40px;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.messages-message-sender-pill .messages-message-pill-content {
+  padding: 7px 20px;
+  background-color: #eeeeee;
+  border-radius: 25px;
+  height: 40px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.messages-message-sender-pill .messages-message-pill-knownAs,
+.messages-message-recipient-pill .messages-message-pill-knownAs {
+  font-weight: 600;
+}

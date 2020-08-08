@@ -12,19 +12,17 @@
         <p>{{user.lastSeen | timeago}}</p>
         <h5>Member since:</h5>
         <p>{{user.created | date:'mediumDate'}}</p>
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-primary">
-            <input type="radio" name="options" id="option1"><i class="fas fa-grin-hearts"></i> Like
-          </label>
-          <label class="btn btn-success">
-            <input type="radio" name="options" id="option2"><i class="fas fa-paper-plane"></i> Message
-          </label>
+        <div class="d-flex flex-row">
+          <button class="btn btn-primary col-6 rounded-0 rounded-left"><i class="fas fa-grin-hearts"></i> Like</button>
+          <button class="btn btn-success col-6 rounded-0 rounded-right" (click)="selectTab(3)"><i
+              class="fas fa-paper-plane"></i>
+            Message</button>
         </div>
       </div>
     </div>
   </div>
   <div class="col-md-8">
-    <tabset>
+    <tabset #staticTabs>
       <tab heading="About {{user.knownAs}}">
         <h4 class="mt-3">Description</h4>
         <p>{{user.introduction}}</p>
@@ -41,7 +39,7 @@
         <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
       </tab>
       <tab heading="Messages">
-        <p>Messages will go here</p>
+        <app-messages-chat [recipientId]="user.id"></app-messages-chat>
       </tab>
     </tabset>
   </div>

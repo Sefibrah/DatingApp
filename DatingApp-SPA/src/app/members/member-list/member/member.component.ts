@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AlertifyjsService } from './../../../services/alertifyjs.service';
 import { AuthService } from './../../../services/auth.service';
 import { UserService } from './../../../services/user.service';
@@ -11,7 +12,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MemberComponent implements OnInit {
   @Input() user: User
-  constructor(private userService: UserService, private authService: AuthService, private alertifyjs: AlertifyjsService) { }
+  constructor(private userService: UserService, private authService: AuthService, private alertifyjs: AlertifyjsService, private router: Router) { }
 
   ngOnInit() {
   }

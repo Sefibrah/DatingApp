@@ -92,14 +92,14 @@ export class MemberEditComponent implements OnInit, OnDestroy {
         photo.isMain = true
         this.userService.mainPhotoUpdated.next(photo.url)
       },
-      error => console.log(error)
+      error => { }
     )
   }
 
   deletePhoto(photo: Photo) {
     this.userService.deletePhoto(this.authService.decodedToken.nameid, photo.id).subscribe(
       () => this.photos.splice(this.photos.indexOf(photo), 1),
-      error => console.log(error)
+      error => { }
     )
   }
   ngOnDestroy() {

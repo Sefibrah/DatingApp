@@ -17,8 +17,7 @@ export class MessagesResolver implements Resolve<Message[]> {
         private authService: AuthService) { }
     resolve(route: ActivatedRouteSnapshot): Observable<Message[]> | Promise<Message[]> | Message[] {
         const userId = this.authService.decodedToken.nameid
-        return this.userService.getUserMessages(userId, this.pageNumber,
-            this.pageSize, this.messageContainer).pipe(
+        return this.userService.getUserMessages(userId, this.pageSize, this.pageNumber, this.messageContainer).pipe(
                 catchError(error => {
                     this.alertify.error("We couldn't load the requested messages")
                     return of(null)
