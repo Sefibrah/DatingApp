@@ -1,16 +1,34 @@
 using DatingApp.API.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Data {
-    public class DataContext : DbContext {
+    public class DataContext : IdentityDbContext<User, Role, int, IdentityUserClaim<int>,
+    UserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>> {
         public DataContext (DbContextOptions<DataContext> options) : base (options) { }
         public DbSet<Value> Values { get; set; }
-        public DbSet<User> Users { get; set; }
+        // public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Message> Messages { get; set; }
         protected override void OnModelCreating (ModelBuilder builder) {
+            base.OnModelCreating(builder);
             builder.Entity<Like> ().HasKey (l => new { l.LikerId, l.LikeeId });
+
+            builder.Entity<UserRole>(userRole => {
+                userRole.HasKey(u => new {u.UserId, u.RoleId});
+
+                userRole.HasOne(u => u.Role)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(u => u.RoleId)
+                .IsRequired();
+
+                userRole.HasOne(u => u.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(u => u.UserId)
+                .IsRequired();
+            });
 
             builder.Entity<Like> ()
                 .HasOne (l => l.Likee)
