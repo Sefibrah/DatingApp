@@ -26,13 +26,13 @@ namespace DatingApp.API
                 {
                     var context = services.GetService<DataContext>();
                     var userManager = services.GetService<UserManager<User>>();
-                    context.Database.Migrate();
-                    Seed.SeedUsers(userManager);
+                    var roleManager = services.GetService<RoleManager<Role>>();
+                    Seed.SeedUsers(userManager, roleManager);
                 }
                 catch (System.Exception ex)
                 {
                     var logger = services.GetService<ILogger<Program>>();
-                    logger.LogError(ex,"An error in the database has occured");
+                    logger.LogError(ex, "An error in the database has occured");
                 }
             }
             host.Run();

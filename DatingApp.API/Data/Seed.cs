@@ -9,17 +9,42 @@ namespace DatingApp.API.Data
 {
     public class Seed
     {
-        public static void SeedUsers(UserManager<User> userManager)
+        public static void SeedUsers(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             if (!userManager.Users.Any())
             {
                 var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);
 
+                var roles = new List<Role>{
+                    new Role{Name = "Member"},
+                    new Role{Name = "Moderator"},
+                    new Role{Name = "Admin"},
+                    new Role{Name = "VIP"}
+                };
+
+                foreach (var role in roles)
+                {
+                    roleManager.CreateAsync(role).Wait();
+                }
+
                 foreach (var user in users)
                 {
-                    Console.WriteLine("User knownAs: "+ user.KnownAs);
-                    userManager.CreateAsync(user,"password").Wait();
+                    userManager.CreateAsync(user, "password").Wait();
+                    userManager.AddToRoleAsync(user, "Member");
+                }
+
+                var admin = new User
+                {
+                    UserName = "Admin"
+                };
+
+                var result = userManager.CreateAsync(admin, "password").Result;
+
+                if (result.Succeeded)
+                {
+                    var adminFromRepo = userManager.FindByNameAsync("Admin").Result;
+                    userManager.AddToRolesAsync(adminFromRepo, new[] { "Admin", "Moderator", "Member", "VIP" });
                 }
             }
         }

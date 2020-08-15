@@ -43,7 +43,7 @@ namespace DatingApp.API
             {
                 config.Password.RequireDigit = false;
                 config.Password.RequiredLength = 4;
-                config.Password.RequireLowercase = false;
+                config.Password.RequireUppercase = false;
                 config.Password.RequireNonAlphanumeric = false;
             });
 
@@ -80,7 +80,6 @@ namespace DatingApp.API
             services.AddCors();
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
-            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddScoped<LogUserActivity>();
         }
