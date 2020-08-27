@@ -65,6 +65,12 @@ namespace DatingApp.API
                 };
             });
 
+            services.AddAuthorization(options => {
+                options.AddPolicy("RequireAdmin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("RequirePhotoModerator", policy => policy.RequireRole("Moderator", "Admin"));
+                options.AddPolicy("RequireVIP", policy => policy.RequireRole("VIP"));
+            });
+
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers(config =>
             {

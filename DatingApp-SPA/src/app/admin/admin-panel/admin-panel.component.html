@@ -1,0 +1,11 @@
+<div class="container">
+  <tabset>
+    <tab heading="User management" *appHasRole="['Admin']">
+      <app-user-management></app-user-management>
+    </tab>
+    <tab heading="Photo management" *appHasRole="['Admin', 'Moderator']">
+      <app-photo-management></app-photo-management>
+    </tab>
+  </tabset>
+</div>
+

@@ -14,5 +14,6 @@ export class User {
         public introduction?: string,
         public lookingFor?: string,
         public interests?: string,
+        public roles?: string[],
         public photos?: Photo[]) { }
 }

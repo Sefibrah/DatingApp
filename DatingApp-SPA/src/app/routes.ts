@@ -1,3 +1,4 @@
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { MessagesResolver } from './resolvers/messages.resolver';
 import { ListsResolver } from './resolvers/lists.resolver';
 import { PreventUnsavedChangesGuard } from './guards/prevent-unsaved-changes.guard';
@@ -22,6 +23,7 @@ const routes: Routes = [
     { path: 'member-list', component: MemberListComponent, canActivate: [AuthGuard], resolve: { users: MemberListResolver } },
     { path: 'members/:id', component: MemberDetailComponent, canActivate: [AuthGuard], resolve: { user: MemberDetailResolver } },
     { path: 'member/edit', component: MemberEditComponent, canActivate: [AuthGuard], resolve: { user: MemberEditResolver }, canDeactivate: [PreventUnsavedChangesGuard] },
+    { path: 'admin', component: AdminPanelComponent, canActivate: [AuthGuard], data: { roles: ['Moderator', 'Admin'] } },
     { path: 'register', component: RegisterComponent },
     { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ]

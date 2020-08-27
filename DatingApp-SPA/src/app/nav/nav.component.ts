@@ -4,7 +4,7 @@ import { AlertifyjsService } from './../services/alertifyjs.service';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
